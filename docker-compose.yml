@@ -1,0 +1,29 @@
+version: "3"
+
+services:
+  api:
+    image: cosmtrek/air
+    build:
+      context: .
+      dockerfile: Dockerfile
+    depends_on:
+      - db
+    restart: unless-stopped
+    ports:
+      - "4000:4000"
+    volumes:
+      - .:/go/src/app
+    command: air
+  db:
+    image: postgres:14.1-alpine
+    restart: always
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    ports:
+      - "5433:5432"
+    volumes:
+      - database-data:/var/lib/postgresql/data
+
+volumes:
+  database-data:
