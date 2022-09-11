@@ -1,4 +1,4 @@
-package playerServiceImpl
+package player_service_impl
 
 import (
 	"errors"
