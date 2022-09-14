@@ -19,12 +19,19 @@ func main() {
 	playerRoutes.Use(middlewares.Test("Amel"))
 
 	playerRoutes.GET("/test", func(c *gin.Context) {
+		abc := "abc"
+		abc = "env"
 		c.JSON(http.StatusOK, gin.H{
-			"message": "Yay",
+			"message": abc,
 		})
 	})
 
-	PORT := os.Getenv("PORT")
+	PORT := "3000"
+
+	if os.Getenv("PORT") != "" {
+		PORT = os.Getenv("PORT")
+	}
+
 	fmt.Println("PORT IS", PORT)
 	r.GET("/health-check", func(c *gin.Context) {
 		c.JSON(http.StatusOK, gin.H{
