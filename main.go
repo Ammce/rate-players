@@ -2,11 +2,14 @@ package main
 
 import (
 	"fmt"
+	"log"
 	"net/http"
 	"os"
 
 	"github.com/Ammce/rate-players/src/adapters/http/middlewares"
 	"github.com/gin-gonic/gin"
+	"github.com/jmoiron/sqlx"
+	_ "github.com/lib/pq"
 )
 
 func main() {
@@ -25,6 +28,14 @@ func main() {
 			"message": abc,
 		})
 	})
+
+	// Pass this as real connection later
+	connStr := "postgres://postgres:postgres@docker.for.mac.localhost:5432/rate_players?sslmode=disable"
+	_, err := sqlx.Connect("postgres", connStr)
+	if err != nil {
+		fmt.Println("Error while connecting")
+		log.Fatalln(err)
+	}
 
 	PORT := "3000"
 
