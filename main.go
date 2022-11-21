@@ -2,13 +2,12 @@ package main
 
 import (
 	"fmt"
-	"log"
 	"net/http"
 	"os"
 
-	"github.com/Ammce/rate-players/src/adapters/http/middlewares"
+	"github.com/Ammce/rate-players/src/adapters/database/postgres"
+	player_http "github.com/Ammce/rate-players/src/adapters/http/player"
 	"github.com/gin-gonic/gin"
-	"github.com/jmoiron/sqlx"
 	_ "github.com/lib/pq"
 )
 
@@ -17,25 +16,20 @@ func main() {
 
 	v1 := r.Group("/v1")
 
-	playerRoutes := v1.Group("/players")
+	player_http.InitPlayerRoutes(v1)
 
-	playerRoutes.Use(middlewares.Test("Amel"))
+	// playerRoutes.Use(middlewares.Test("Amel"))
 
-	playerRoutes.GET("/test", func(c *gin.Context) {
-		abc := "abc"
-		abc = "env"
-		c.JSON(http.StatusOK, gin.H{
-			"message": abc,
-		})
-	})
+	// playerRoutes.GET("/test", func(c *gin.Context) {
+	// 	abc := "abc"
+	// 	abc = "env"
+	// 	c.JSON(http.StatusOK, gin.H{
+	// 		"message": abc,
+	// 	})
+	// })
 
 	// Pass this as real connection later
-	connStr := "postgres://postgres:postgres@docker.for.mac.localhost:5432/rate_players?sslmode=disable"
-	_, err := sqlx.Connect("postgres", connStr)
-	if err != nil {
-		fmt.Println("Error while connecting")
-		log.Fatalln(err)
-	}
+	postgres.Connect()
 
 	PORT := "3000"
 
