@@ -9,24 +9,29 @@ import (
 type PlayerServiceImpl struct {
 }
 
-func CreatePlayer() (*player.Player, error) {
+func (PlayerServiceImpl) CreatePlayer() (*player.Player, error) {
+	pl := makePlayer()
+	return pl, nil
+}
+
+func (PlayerServiceImpl) UpdatePlayer() (*player.Player, error) {
 	return nil, errors.New("Service Method Not Implemented")
 }
 
-func UpdatePlayer() (*player.Player, error) {
+func (PlayerServiceImpl) GetPlayerById() (*player.Player, error) {
 	return nil, errors.New("Service Method Not Implemented")
 }
 
-func GetPlayerById() (*player.Player, error) {
+func (PlayerServiceImpl) GetPlayers() (*[]player.Player, error) {
 	return nil, errors.New("Service Method Not Implemented")
 }
 
-func GetPlayers() (*[]player.Player, error) {
-	return nil, errors.New("Service Method Not Implemented")
-}
-
-func DeletePlayerById() (bool, error) {
+func (PlayerServiceImpl) DeletePlayerById() (bool, error) {
 	return false, errors.New("Service Method Not Implemented")
+}
+
+func NewPlayerServiceImpl() PlayerServiceImpl {
+	return PlayerServiceImpl{}
 }
 
 func makePlayer() *player.Player {
