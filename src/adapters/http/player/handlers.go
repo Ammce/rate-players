@@ -1,6 +1,7 @@
 package player_http
 
 import (
+	"fmt"
 	"net/http"
 
 	player_service_impl "github.com/Ammce/rate-players/src/application/player"
@@ -10,7 +11,14 @@ import (
 var userService = player_service_impl.NewPlayerServiceImpl()
 
 func CreatePlayer(c *gin.Context) {
-	_, err := userService.CreatePlayer()
+	createPlayerInput := new(CreatePlayerInput)
+	err := c.Bind(createPlayerInput)
+	if err != nil {
+		fmt.Println("Error happened while binding createPlayerInput")
+		return
+	}
+
+	createdPlayer, err := userService.CreatePlayer()
 	if err != nil {
 		// TODO - Create function to map error and return error message
 		c.JSON(http.StatusOK, gin.H{
@@ -20,7 +28,6 @@ func CreatePlayer(c *gin.Context) {
 
 	}
 	c.JSON(http.StatusOK, gin.H{
-		"test": true,
+		"player": createdPlayer,
 	})
-	return
 }

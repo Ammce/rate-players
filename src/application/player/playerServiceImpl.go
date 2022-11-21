@@ -36,11 +36,10 @@ func NewPlayerServiceImpl() PlayerServiceImpl {
 
 func makePlayer() *player.Player {
 	return &player.Player{
-		Id:             "testId",
-		FirstName:      "Amel",
-		LasttName:      "Muminovic",
-		DateOfBirth:    770475473000,
-		Nationality:    "SRB",
-		ProfilePicture: "https://static.wikia.nocookie.net/multiversus/images/5/55/Morty_MV.png",
+		Id:          "testId",
+		FirstName:   "Amel",
+		LastName:    "Muminovic",
+		DateOfBirth: "770475473000",
+		ImageURL:    "https://static.wikia.nocookie.net/multiversus/images/5/55/Morty_MV.png",
 	}
 }
