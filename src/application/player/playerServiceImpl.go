@@ -9,9 +9,8 @@ import (
 type PlayerServiceImpl struct {
 }
 
-func (PlayerServiceImpl) CreatePlayer() (*player.Player, error) {
-	pl := makePlayer()
-	return pl, nil
+func (PlayerServiceImpl) CreatePlayer(player *player.Player) (*player.Player, error) {
+	return player, nil
 }
 
 func (PlayerServiceImpl) UpdatePlayer() (*player.Player, error) {

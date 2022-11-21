@@ -18,7 +18,9 @@ func CreatePlayer(c *gin.Context) {
 		return
 	}
 
-	createdPlayer, err := userService.CreatePlayer()
+	domainPlayer := CreatePlayerInputToPlayerEntity(*createPlayerInput)
+
+	createdPlayer, err := userService.CreatePlayer(&domainPlayer)
 	if err != nil {
 		// TODO - Create function to map error and return error message
 		c.JSON(http.StatusOK, gin.H{
