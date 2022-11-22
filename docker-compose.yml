@@ -12,6 +12,8 @@ services:
     environment:
       - PORT=4000
       - RAPID_API_URL=${RAPID_API_URL}
+      - RAPID_API_KEY=${RAPID_API_KEY}
+      - RAPID_API_HOST=${RAPID_API_HOST}
     ports:
       - "4000:4000"
     volumes:
