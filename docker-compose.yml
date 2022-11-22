@@ -11,6 +11,7 @@ services:
     restart: unless-stopped
     environment:
       - PORT=4000
+      - RAPID_API_URL=${RAPID_API_URL}
     ports:
       - "4000:4000"
     volumes:
