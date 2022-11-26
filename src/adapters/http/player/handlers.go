@@ -4,11 +4,15 @@ import (
 	"fmt"
 	"net/http"
 
+	"github.com/Ammce/rate-players/src/adapters/database/postgres"
+	repository_impl_player "github.com/Ammce/rate-players/src/adapters/database/postgres/repositoryImpl/player"
 	player_service_impl "github.com/Ammce/rate-players/src/application/player"
 	"github.com/gin-gonic/gin"
 )
 
-var userService = player_service_impl.NewPlayerServiceImpl()
+var db = postgres.GetDBInstance()
+var playerRepository = repository_impl_player.NewPlayerRepositoryImpl(db)
+var userService = player_service_impl.NewPlayerServiceImpl(playerRepository)
 
 func CreatePlayer(c *gin.Context) {
 	createPlayerInput := new(CreatePlayerInput)

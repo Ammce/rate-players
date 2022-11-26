@@ -7,10 +7,15 @@ import (
 )
 
 type PlayerServiceImpl struct {
+	playerRepository player.PlayerRepository
 }
 
-func (PlayerServiceImpl) CreatePlayer(player *player.Player) (*player.Player, error) {
-	return player, nil
+func (psi PlayerServiceImpl) CreatePlayer(player *player.Player) (*player.Player, error) {
+	createdPlayer, err := psi.playerRepository.CreatePlayer(player)
+	if err != nil {
+		return nil, err
+	}
+	return createdPlayer, nil
 }
 
 func (PlayerServiceImpl) UpdatePlayer() (*player.Player, error) {
@@ -29,8 +34,10 @@ func (PlayerServiceImpl) DeletePlayerById() (bool, error) {
 	return false, errors.New("Service Method Not Implemented")
 }
 
-func NewPlayerServiceImpl() PlayerServiceImpl {
-	return PlayerServiceImpl{}
+func NewPlayerServiceImpl(playerRepository player.PlayerRepository) PlayerServiceImpl {
+	return PlayerServiceImpl{
+		playerRepository: playerRepository,
+	}
 }
 
 func makePlayer() *player.Player {
