@@ -37,7 +37,9 @@ func (pri PlayerRepositoryImpl) CreatePlayer(playerToCreate *player.Player) (*pl
 
 	lastInsertId := ""
 
-	err := pri.db.QueryRow(`INSERT INTO players (first_name, last_name, date_of_birth, image_url) VALUES ($1, $2, $3, $4) RETURNING id`, repoPlayer.FirstName, repoPlayer.LastName, repoPlayer.DateOfBirth, repoPlayer.ImageURL).Scan(&lastInsertId)
+	createPlayerQuery := `INSERT INTO players (first_name, last_name, date_of_birth, image_url) VALUES ($1, $2, $3, $4) RETURNING id`
+
+	err := pri.db.QueryRow(createPlayerQuery, repoPlayer.FirstName, repoPlayer.LastName, repoPlayer.DateOfBirth, repoPlayer.ImageURL).Scan(&lastInsertId)
 	if err != nil {
 		// TODO - Throw valid db error
 		fmt.Println("U Error 1 sam")
