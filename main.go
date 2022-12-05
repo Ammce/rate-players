@@ -2,34 +2,18 @@ package main
 
 import (
 	"fmt"
-	"net/http"
 	"os"
 
 	"github.com/Ammce/rate-players/src/adapters/database/postgres"
-	player_http "github.com/Ammce/rate-players/src/adapters/http/player"
+	"github.com/Ammce/rate-players/src/adapters/gin_rest"
 	"github.com/gin-gonic/gin"
 	_ "github.com/lib/pq"
 )
 
 func main() {
+	db := postgres.Connect()
 	r := gin.Default()
-
-	v1 := r.Group("/v1")
-
-	player_http.InitPlayerRoutes(v1)
-
-	// playerRoutes.Use(middlewares.Test("Amel"))
-
-	// playerRoutes.GET("/test", func(c *gin.Context) {
-	// 	abc := "abc"
-	// 	abc = "env"
-	// 	c.JSON(http.StatusOK, gin.H{
-	// 		"message": abc,
-	// 	})
-	// })
-
-	// Pass this as real connection later
-	postgres.Connect()
+	gin_rest.InitRoutes(&r.RouterGroup, db)
 
 	PORT := "3000"
 
@@ -38,11 +22,11 @@ func main() {
 	}
 
 	fmt.Println("PORT IS", PORT)
-	r.GET("/health-check", func(c *gin.Context) {
-		c.JSON(http.StatusOK, gin.H{
-			"message": "works",
-		})
-	})
+	// r.GET("/health-check", func(c *gin.Context) {
+	// 	c.JSON(http.StatusOK, gin.H{
+	// 		"message": "works",
+	// 	})
+	// })
 	address := fmt.Sprintf("0.0.0.0:%s", PORT)
 	r.Run(address)
 }

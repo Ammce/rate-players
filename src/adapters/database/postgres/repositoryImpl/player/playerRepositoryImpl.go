@@ -34,24 +34,18 @@ type PlayerRepositoryImpl struct {
 
 func (pri PlayerRepositoryImpl) CreatePlayer(playerToCreate *player.Player) (*player.Player, error) {
 	repoPlayer := AppPlayerToRepoPlayer(playerToCreate)
-	fmt.Println("OVDE SAM ", repoPlayer)
-	// createdPlayerResp, err := pri.db.NamedExec(`INSERT INTO players (first_name, last_name, date_of_birth, image_url) VALUES (:first_name, :last_name, :date_of_birth, :image_url)`, &repoPlayer)
-	createdPlayerResp, err := pri.db.Exec(`INSERT INTO players (first_name, last_name, date_of_birth, image_url) VALUES ($1, $2, $3, $4)`, "Amel", "Muminovic", "01-06-1994", "sad")
-	fmt.Println("U error 0 sam")
+
+	lastInsertId := ""
+
+	err := pri.db.QueryRow(`INSERT INTO players (first_name, last_name, date_of_birth, image_url) VALUES ($1, $2, $3, $4) RETURNING id`, repoPlayer.FirstName, repoPlayer.LastName, repoPlayer.DateOfBirth, repoPlayer.ImageURL).Scan(&lastInsertId)
 	if err != nil {
 		// TODO - Throw valid db error
 		fmt.Println("U Error 1 sam")
+		fmt.Println(err)
 		return nil, err
 	}
-	playerId, err1 := createdPlayerResp.LastInsertId()
 
-	if err1 != nil {
-		fmt.Println("U Error 2 sam")
-		// TODO - Throw valid db error
-		return nil, err1
-	}
-
-	playerToCreate.Id = string(rune(playerId))
+	playerToCreate.Id = lastInsertId
 	return playerToCreate, nil
 }
 
