@@ -42,6 +42,28 @@ func (ph PlayerHanlders) CreatePlayer(c *gin.Context) {
 	})
 }
 
+func (ph PlayerHanlders) GetPlayers(c *gin.Context) {
+	c.JSON(http.StatusOK, gin.H{
+		"player": nil,
+	})
+}
+
+func (ph PlayerHanlders) GetPlayerById(c *gin.Context) {
+	playerId := c.Param("playerId")
+	domainPlayer, err := ph.playerService.GetPlayerById(playerId)
+	if err != nil {
+		// TODO - Create function to map error and return error message
+		fmt.Println(err)
+		c.JSON(http.StatusOK, gin.H{
+			"message": "Doesnt work",
+		})
+		return
+
+	}
+
+	c.JSON(http.StatusOK, domainPlayer)
+}
+
 func NewPlayerHanlders(playerService player.PlayerService) PlayerHanlders {
 	return PlayerHanlders{
 		playerService: playerService,

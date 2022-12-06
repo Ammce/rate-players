@@ -22,11 +22,15 @@ func (PlayerServiceImpl) UpdatePlayer() (*player.Player, error) {
 	return nil, errors.New("Service Method Not Implemented")
 }
 
-func (PlayerServiceImpl) GetPlayerById() (*player.Player, error) {
-	return nil, errors.New("Service Method Not Implemented")
+func (psi PlayerServiceImpl) GetPlayerById(playerId string) (*player.Player, error) {
+	playerById, err := psi.playerRepository.GetPlayerById(playerId)
+	if err != nil {
+		return nil, err
+	}
+	return playerById, nil
 }
 
-func (PlayerServiceImpl) GetPlayers() (*[]player.Player, error) {
+func (PlayerServiceImpl) GetPlayers() ([]*player.Player, error) {
 	return nil, errors.New("Service Method Not Implemented")
 }
 

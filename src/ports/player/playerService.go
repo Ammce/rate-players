@@ -4,7 +4,7 @@ package player
 type PlayerService interface {
 	CreatePlayer(*Player) (*Player, error)
 	UpdatePlayer() (*Player, error)
-	GetPlayerById() (*Player, error)
-	GetPlayers() (*[]Player, error)
+	GetPlayerById(playerId string) (*Player, error)
+	GetPlayers() ([]*Player, error)
 	DeletePlayerById() (bool, error)
 }
