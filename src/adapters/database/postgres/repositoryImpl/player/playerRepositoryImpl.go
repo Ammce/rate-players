@@ -59,7 +59,6 @@ func (pri PlayerRepositoryImpl) CreatePlayer(playerToCreate *player.Player) (*pl
 	err := pri.db.QueryRow(createPlayerQuery, repoPlayer.FirstName, repoPlayer.LastName, repoPlayer.DateOfBirth, repoPlayer.ImageURL).Scan(&lastInsertId)
 	if err != nil {
 		// TODO - Throw valid db error
-		fmt.Println("U Error 1 sam")
 		fmt.Println(err)
 		return nil, err
 	}
@@ -74,12 +73,9 @@ func (pri PlayerRepositoryImpl) GetPlayers() ([]*player.Player, error) {
 }
 
 func (pri PlayerRepositoryImpl) GetPlayerById(playerId string) (*player.Player, error) {
-	fmt.Println("Poziva se")
 	repoPlayer := RepoPlayer{}
 	err := pri.db.Get(&repoPlayer, "SELECT * FROM players WHERE id=$1", playerId)
 	if err != nil {
-		// TODO - Throw valid db error
-		fmt.Println("U Error 1 sam")
 		fmt.Println(err)
 		return nil, err
 	}
