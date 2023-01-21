@@ -7,7 +7,7 @@ type ImportPlayerRapidApi struct {
 }
 
 func (rapidApi ImportPlayerRapidApi) ImportPlayersForTeam(teamId int8) bool {
-	rapidApi.rapidHttpClient.GET("")
+	rapidApi.rapidHttpClient.GET("/players?team=541&season=2022")
 	return true
 }
 
