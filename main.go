@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"net/http"
 	"os"
 
 	"github.com/Ammce/rate-players/src/adapters/database/postgres"
@@ -22,11 +23,11 @@ func main() {
 	}
 
 	fmt.Println("PORT IS", PORT)
-	// r.GET("/health-check", func(c *gin.Context) {
-	// 	c.JSON(http.StatusOK, gin.H{
-	// 		"message": "works",
-	// 	})
-	// })
+	r.GET("/health-check", func(c *gin.Context) {
+		c.JSON(http.StatusOK, gin.H{
+			"message": "works",
+		})
+	})
 	address := fmt.Sprintf("0.0.0.0:%s", PORT)
 	r.Run(address)
 }
