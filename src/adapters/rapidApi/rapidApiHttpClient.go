@@ -15,7 +15,7 @@ var rapidApiHost = os.Getenv("RAPID_API_HOST")
 
 func (RapidApiHttpClient) GET(url string) {
 	fullUrl := fmt.Sprintf("%s%s", rapidApiBaseUrl, url)
-	req, _ := http.NewRequest("GET", url, nil)
+	req, _ := http.NewRequest("GET", fullUrl, nil)
 
 	req.Header.Add("X-RapidAPI-Key", rapidApiKey)
 	req.Header.Add("X-RapidAPI-Host", rapidApiHost)
@@ -24,6 +24,7 @@ func (RapidApiHttpClient) GET(url string) {
 
 	if err != nil {
 		fmt.Println("Error getting all players")
+		fmt.Println(err)
 	}
 
 	defer res.Body.Close()
