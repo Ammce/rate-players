@@ -7,7 +7,9 @@ type ImportPlayerRapidApi struct {
 }
 
 func (rapidApi ImportPlayerRapidApi) ImportPlayersForTeam(teamId int8) bool {
-	rapidApi.rapidHttpClient.GET("/players?team=541&season=2022")
+	// b, _err := rapidApi.rapidHttpClient.GET("/players?team=541&season=2022")
+	// TODO - Marshall Body to Response Struct
+	// TODO -  Transform Response struct to slice of players for bulk creation for database
 	return true
 }
 
