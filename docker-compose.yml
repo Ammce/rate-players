@@ -11,7 +11,7 @@ services:
     restart: unless-stopped
     environment:
       - PORT=4000
-      - RAPID_API_URL=${RAPID_API_URL}
+      - RAPID_API_BASE_URL=${RAPID_API_BASE_URL}
       - RAPID_API_KEY=${RAPID_API_KEY}
       - RAPID_API_HOST=${RAPID_API_HOST}
     ports:
