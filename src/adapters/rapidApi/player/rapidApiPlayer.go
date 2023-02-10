@@ -16,7 +16,7 @@ type Player struct {
 	Photo string `json:"photo"`
 }
 type PlayerWithStatistics struct {
-	Player Player
+	Player
 }
 
 type Response struct {
@@ -32,7 +32,7 @@ func (rapidApi ImportPlayerRapidApi) ImportPlayersForTeam(teamId int8) bool {
 		fmt.Println("Error has happened hereeeeeeeee")
 		return false
 	}
-	fmt.Println("PLAYER REZPONSE", playerResponse)
+
 	// TODO - Marshall Body to Response Struct
 	// TODO -  Transform Response struct to slice of players for bulk creation for database
 	return true
