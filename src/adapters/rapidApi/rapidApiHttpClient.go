@@ -1,27 +1,13 @@
 package rapidapi
 
 import (
+	"encoding/json"
 	"fmt"
-	"io/ioutil"
 	"net/http"
 	"os"
 )
 
 type RapidApiHttpClient struct{}
-
-type Player struct {
-	Id    int    `json:"id"`
-	Name  string `json:"name"`
-	Photo string `json:"photo"`
-}
-type PlayerWithStatistics struct {
-	Player Player
-}
-
-type Response struct {
-	Results  int                    `json:"results"`
-	Response []PlayerWithStatistics `json:"response"`
-}
 
 var rapidApiKey = os.Getenv("RAPID_API_KEY")
 var rapidApiBaseUrl = os.Getenv("RAPID_API_BASE_URL")
@@ -31,7 +17,7 @@ func formatUrl(url string) string {
 	return fmt.Sprintf("%s%s", rapidApiBaseUrl, url)
 }
 
-func (RapidApiHttpClient) GET(url string) ([]byte, error) {
+func (RapidApiHttpClient) GET(url string, target interface{}) error {
 	fullUrl := formatUrl(url)
 	req, _ := http.NewRequest("GET", fullUrl, nil)
 
@@ -41,16 +27,11 @@ func (RapidApiHttpClient) GET(url string) ([]byte, error) {
 	res, err := http.DefaultClient.Do(req)
 
 	if err != nil {
-		return nil, err
+		return err
 	}
 
 	defer res.Body.Close()
-	body, err := ioutil.ReadAll(res.Body)
-
-	if err != nil {
-		return nil, err
-	}
-	return body, nil
+	return json.NewDecoder(res.Body).Decode(target)
 
 }
 
